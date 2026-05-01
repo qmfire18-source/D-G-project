@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D&G Beauty — Luxury & Commercial Activation Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --gold:#C4974E;--gold-l:#E8C98A;--gold-pale:#2A1F0A;
+  --black:#0A0A0A;--surface:#111;--card:#161616;--card2:#1A1A1A;
+  --border:rgba(196,151,78,.18);--text:#EDE8E0;--muted:#888;
+  --green:#1B4D2E;--red:#6B1A1A;--navy:#162845;--amber:#7A5C1E;
+  --r:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#111}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 40px;gap:40px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);letter-spacing:4px;white-space:nowrap}
+.nav-logo span{font-size:9px;letter-spacing:3px;color:var(--muted);display:block;font-family:'Inter',sans-serif;font-weight:400;margin-top:1px}
+.nav-links{display:flex;gap:6px;flex:1;justify-content:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;transition:.2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);background:rgba(196,151,78,.08)}
+.nav-tag{font-size:10px;color:var(--muted);letter-spacing:.5px;white-space:nowrap;border:1px solid var(--border);padding:4px 10px;border-radius:20px}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 40px 60px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 25% 60%,rgba(196,151,78,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 80% 30%,rgba(196,151,78,.06) 0%,transparent 60%),#0A0A0A;z-index:0}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(196,151,78,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(196,151,78,.04) 1px,transparent 1px);background-size:80px 80px;z-index:0}
+.hero-content{position:relative;z-index:1;max-width:900px}
+.hero-eyebrow{font-size:11px;font-weight:500;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;justify-content:center;gap:12px}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.5}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,62px);font-weight:700;line-height:1.12;color:#fff;margin-bottom:16px;letter-spacing:-1px}
+.hero-title em{color:var(--gold);font-style:normal}
+.hero-subtitle{font-size:14px;color:var(--muted);letter-spacing:1px;margin-bottom:56px;text-transform:uppercase}
+.hero-stats{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:rgba(255,255,255,.02)}
+.hero-stat{flex:1;padding:28px 32px;text-align:center;position:relative}
+.hero-stat+.hero-stat{border-left:1px solid var(--border)}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--gold);line-height:1;display:block}
+.hero-stat-lbl{font-size:11px;color:var(--muted);letter-spacing:.5px;margin-top:8px;display:block}
+.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite;color:var(--muted);font-size:10px;letter-spacing:2px;text-transform:uppercase;z-index:1}
+.scroll-indicator::before{content:'';width:1px;height:40px;background:linear-gradient(var(--gold),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ── SECTION GENERIC ── */
+section{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-eyebrow{font-size:10px;font-weight:600;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,40px);font-weight:700;color:#fff;margin-bottom:8px;line-height:1.2}
+.section-rule{width:50px;height:2px;background:var(--gold);margin:20px 0 40px}
+.section-intro{font-size:15px;color:var(--muted);max-width:720px;line-height:1.75;margin-bottom:48px}
+section.full-bleed{max-width:100%;padding-left:0;padding-right:0}
+section.full-bleed .inner{max-width:1200px;margin:0 auto;padding:0 40px}
+
+/* ── SECTION SEPARATORS (dark bg alternating) ── */
+.section-dark{background:var(--surface)}
+
+/* ── CONTEXT ── */
+.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.context-body{font-size:15px;line-height:1.8;color:#BBB;margin-bottom:28px}
+.context-facts{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.fact-item{display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+.fact-key{font-size:13px;font-weight:600;color:var(--gold);min-width:48px;padding-top:2px}
+.fact-val{font-size:13px;color:#CCC;line-height:1.55}
+.tensions-list{display:flex;flex-direction:column;gap:14px}
+.tension-item{padding:18px 20px;background:var(--card);border-left:3px solid var(--gold);border-radius:0 var(--r) var(--r) 0}
+.tension-tag{font-size:10px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.tension-desc{font-size:13px;color:#AAA;line-height:1.55}
+.quote-box{margin-top:48px;padding:32px 36px;border:1px solid var(--border);border-radius:var(--r);background:rgba(196,151,78,.04);text-align:center}
+.quote-box p{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--text)}
+.quote-box em{color:var(--gold);font-style:normal}
+
+/* ── BENCHMARKING ── */
+.spectrum-wrap{margin:0 0 48px;position:relative}
+.spectrum-labels-top{display:flex;justify-content:space-between;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.spectrum-bar{height:10px;border-radius:5px;background:linear-gradient(to right,#0A0A0A 0%,#2A2A2A 25%,#555 50%,#999 75%,#CCC 100%);position:relative;margin-bottom:28px}
+.spectrum-brands{display:flex;justify-content:space-between;position:relative}
+.brand-pin{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.brand-pin-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--gold)}
+.brand-pin-name{font-size:11px;font-weight:500;color:#CCC;white-space:nowrap}
+.brand-pin-name.dgb{color:var(--gold);font-weight:600}
+.brand-pin-name.retailer{color:var(--muted)}
+.spectrum-dgb-zone{position:absolute;top:-5px;left:20%;width:16%;height:20px;border:1.5px dashed var(--gold);border-radius:4px;opacity:.6}
+.spectrum-dgb-label{position:absolute;top:-22px;left:22%;font-size:9px;color:var(--gold);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+/* dot matrix */
+.mx-table{width:100%;border-collapse:collapse;font-size:12px}
+.mx-table th{background:var(--card);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:12px 16px;text-align:center;border:1px solid rgba(255,255,255,.06)}
+.mx-table th.brand-col{text-align:left}
+.mx-table td{padding:10px 16px;text-align:center;border:1px solid rgba(255,255,255,.04);vertical-align:middle}
+.mx-table td.brand{text-align:left;font-weight:500;color:#CCC;font-size:12px}
+.mx-table td.brand.dgb-row{color:var(--gold);font-weight:600}
+.mx-table tr.sep td{background:rgba(196,151,78,.08);color:var(--gold);font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:left}
+.mx-table tr:hover td{background:rgba(255,255,255,.02)}
+.mx-table tr.dgb-line td{background:rgba(196,151,78,.05)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%}
+.dot-full{background:#2E7D4F}
+.dot-half{background:var(--gold)}
+.dot-none{background:#2A2A2A;border:1px solid #333}
+.mx-legend{display:flex;gap:24px;margin-top:16px;font-size:12px;color:var(--muted)}
+.mx-legend-item{display:flex;align-items:center;gap:8px}
+
+/* ── MECHANICS ── */
+.mec-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.mec-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:.3s;cursor:default}
+.mec-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.mec-header{padding:16px;text-align:center}
+.mec-icon{font-size:26px;display:block;margin-bottom:10px}
+.mec-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;line-height:1.3}
+.mec-body{padding:16px}
+.mec-badge{display:inline-block;font-size:10px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:12px;letter-spacing:.5px}
+.mec-badge.safe{background:rgba(27,77,46,.4);color:#6FCF97;border:1px solid rgba(27,77,46,.6)}
+.mec-badge.warn{background:rgba(107,26,26,.4);color:#F5AAAA;border:1px solid rgba(107,26,26,.6)}
+.mec-badge.gap{background:rgba(22,40,69,.4);color:#90B4D8;border:1px solid rgba(22,40,69,.6)}
+.mec-badge.str{background:rgba(122,92,30,.4);color:var(--gold-l);border:1px solid rgba(122,92,30,.6)}
+.mec-text{font-size:12px;color:#999;line-height:1.6}
+.mec-dgb{font-size:11px;color:var(--gold);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);line-height:1.5}
+
+/* ── CHARTS ── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+.chart-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:28px;transition:.3s}
+.chart-card:hover{border-color:rgba(196,151,78,.35)}
+.chart-card-title{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.chart-card-sub{font-size:11px;color:var(--muted);margin-bottom:20px}
+.chart-container{position:relative;height:220px}
+
+/* ── TENSIONS ── */
+.tens-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.tens-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:24px 20px;text-align:center;transition:.3s}
+.tens-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.tens-left,.tens-right{font-size:11px;font-weight:700;letter-spacing:2px;color:#888;text-transform:uppercase;padding:8px 12px;background:var(--card2);border-radius:4px;display:inline-block}
+.tens-vs{font-size:20px;color:var(--gold);margin:10px 0;display:block}
+.tens-right{color:#AAA}
+.tens-desc{font-size:12px;color:#777;line-height:1.6;margin-top:14px}
+
+/* ── STRATEGY ── */
+.strat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.strat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:.3s;display:flex;flex-direction:column}
+.strat-card:hover{transform:translateY(-8px);box-shadow:0 24px 48px rgba(0,0,0,.5)}
+.strat-header{padding:24px 22px 18px}
+.strat-icon{font-size:22px;margin-bottom:10px}
+.strat-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;line-height:1.2}
+.strat-body{padding:0 22px 24px;flex:1}
+.strat-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.strat-bullet{color:var(--gold);font-size:12px;flex-shrink:0;margin-top:2px}
+.strat-item-text{font-size:12.5px;color:#AAA;line-height:1.6}
+.strat-item-text strong{color:#DDD;font-weight:600}
+
+/* ── FOOTER ── */
+footer{background:var(--black);border-top:1px solid var(--border);padding:60px 40px;text-align:center}
+.footer-logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold);letter-spacing:6px;margin-bottom:8px}
+.footer-sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:40px;text-transform:uppercase}
+.footer-quote{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:#999;max-width:700px;margin:0 auto 40px;line-height:1.7}
+.footer-quote em{color:var(--gold);font-style:normal}
+.footer-meta{font-size:11px;color:#444;letter-spacing:.5px}
+
+/* ── ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+.reveal-delay-5{transition-delay:.5s}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="nav-logo">D&amp;G<span>BEAUTY</span></div>
+  <div class="nav-links">
+    <a href="#context">Context</a>
+    <a href="#benchmarking">Benchmarking</a>
+    <a href="#mechanics">Mechanics</a>
+    <a href="#market">Market Data</a>
+    <a href="#tensions">Tensions</a>
+    <a href="#strategy">Strategy</a>
+  </div>
+  <div class="nav-tag">Option 1 · Middle East</div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" style="padding:0;max-width:100%">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bocconi University Project Work 2025</div>
+    <h1 class="hero-title">Luxury &amp; <em>Commercial</em><br>Activation Strategy</h1>
+    <p class="hero-subtitle">Dolce &amp; Gabbana Beauty &nbsp;·&nbsp; Option 1 &nbsp;·&nbsp; Middle East Focus</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="cnt-rev">€0M</span>
+        <span class="hero-stat-lbl">DGB Revenue 2025</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" id="cnt-me">$0B</span>
+        <span class="hero-stat-lbl">ME Market 2023 → $30B by 2030</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">×2</span>
+        <span class="hero-stat-lbl">Projected ME Growth by 2030</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num" style="font-size:30px">0%</span>
+        <span class="hero-stat-lbl">Discount on DGB.com</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- ── CONTEXT ── -->
+<div class="section-dark">
+<section id="context">
+  <div class="section-eyebrow reveal">01 — Context &amp; Key Tensions</div>
+  <h2 class="section-title reveal">The Structural Paradox<br>of Luxury Beauty</h2>
+  <div class="section-rule reveal"></div>
+  <div class="context-grid">
+    <div>
+      <p class="context-body reveal">Luxury beauty brands operate under a fundamental structural tension: they must drive sustained <strong style="color:#DDD">commercial performance</strong> while protecting an image built on <strong style="color:#DDD">exclusivity, desirability, and long-term emotional value</strong>. Fully internalised in 2021 following the end of its licensing agreement with Shiseido, DGB now manages its own operations across four subsidiaries and approximately 500 employees, generating <strong style="color:var(--gold)">€660 million in revenue in 2025</strong> — a 32% increase since 2019. The Middle East has emerged as a strategic priority: valued at $15B in 2023 and projected to double by 2030, driven by high purchasing power, a young digital-native population, and deep cultural attachment to beauty, gifting, and fragrance.</p>
+      <div class="context-facts">
+        <div class="fact-item reveal reveal-delay-1">
+          <span class="fact-key">2021</span>
+          <span class="fact-val">Full internalization of DGB operations — end of Shiseido licensing, 500+ employees, 4 subsidiaries</span>
+        </div>
+        <div class="fact-item reveal reveal-delay-2">
+          <span class="fact-key">+32%</span>
+          <span class="fact-val">Revenue growth since 2019 — €500M → €660M · Content recognized as best-in-class by retail partners</span>
+        </div>
+        <div class="fact-item reveal reveal-delay-3">
+          <span class="fact-key">ME</span>
+          <span class="fact-val">Dubai Mall boutique · UAE = 50–60% of ME luxury beauty · Ramadan &amp; Eid gifting culture central</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:11px;font-weight:600;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:20px" class="reveal">Identified Tensions</p>
+      <div class="tensions-list">
+        <div class="tension-item reveal reveal-delay-1">
+          <div class="tension-tag">Visibility vs. Prestige</div>
+          <div class="tension-desc">Discounts drive conversion but directly erode luxury prestige cues — DGB's zero-discount policy is correct but creates disadvantage during key retail moments.</div>
+        </div>
+        <div class="tension-item reveal reveal-delay-2">
+          <div class="tension-tag">Experience vs. Transaction</div>
+          <div class="tension-desc">Luxury brands must resist mass-retail logic on owned channels — elevating every purchase into an editorial experience, not a frictionless checkout.</div>
+        </div>
+        <div class="tension-item reveal reveal-delay-3">
+          <div class="tension-tag">Exclusivity vs. Accessibility</div>
+          <div class="tension-desc">Growth must come from extending the perception of exclusivity — not from genuinely making products less rare or widely accessible.</div>
+        </div>
+        <div class="tension-item reveal reveal-delay-4">
+          <div class="tension-tag">Loyalty Gap</div>
+          <div class="tension-desc">DGB has no formal loyalty programme — its most significant competitive gap vs. Dior Beauty Privé, Chanel La Collection, and YSL Beauty Club.</div>
+        </div>
+        <div class="tension-item reveal reveal-delay-5">
+          <div class="tension-tag">Brand Control vs. Retail Dependency</div>
+          <div class="tension-desc">Retailers drive volume but introduce visible discounts, standardised presentation, and reduced storytelling control — a structural vulnerability.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="quote-box reveal" style="margin-top:48px">
+    <p>"In luxury, value must be <em>added</em>, not reduced — the most successful players aestheticise commerce, making it invisible behind gifting, exclusivity, and storytelling."</p>
+  </div>
+</section>
+</div>
+
+<!-- ── BENCHMARKING ── -->
+<section id="benchmarking">
+  <div class="section-eyebrow reveal">02 — Competitive Benchmarking</div>
+  <h2 class="section-title reveal">Promotional Visibility Spectrum</h2>
+  <div class="section-rule reveal"></div>
+  <p class="section-intro reveal">Analysis of official online channels and retailer ecosystems across 6 luxury brands and 4 Middle East e-retailers reveals a clear architecture: luxury-owned channels avoid markdown language, delegating commercial pressure to retail partners. The degree of application varies significantly across the competitive set.</p>
+
+  <div class="spectrum-wrap reveal">
+    <div class="spectrum-labels-top">
+      <span>◀ Prestige-Safe</span>
+      <span>Commercial ▶</span>
+    </div>
+    <div class="spectrum-bar">
+      <div class="spectrum-dgb-zone"></div>
+      <div class="spectrum-dgb-label">★ D&amp;G Target</div>
+    </div>
+    <div class="spectrum-brands">
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:var(--gold)"></div><span class="brand-pin-name">Hermès</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#aaa"></div><span class="brand-pin-name">Chanel</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#aaa"></div><span class="brand-pin-name">Dior</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:var(--gold);width:14px;height:14px;border:2px solid var(--gold);box-shadow:0 0 10px var(--gold)"></div><span class="brand-pin-name dgb">★ D&amp;G</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#777"></div><span class="brand-pin-name">Prada</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#777"></div><span class="brand-pin-name">Armani</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#999"></div><span class="brand-pin-name">YSL</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#555"></div><span class="brand-pin-name retailer">Ounass</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#444"></div><span class="brand-pin-name retailer">Sephora</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#333"></div><span class="brand-pin-name retailer">LookFant.</span></div>
+      <div class="brand-pin"><div class="brand-pin-dot" style="background:#222"></div><span class="brand-pin-name retailer">Notino</span></div>
+    </div>
+  </div>
+
+  <table class="mx-table reveal">
+    <thead>
+      <tr>
+        <th class="brand-col" style="width:18%">Brand</th>
+        <th>Discount<br>Visibility</th>
+        <th>Gift with<br>Purchase</th>
+        <th>Loyalty<br>Program</th>
+        <th>Retailer<br>Activation</th>
+        <th>Limited<br>Editions</th>
+        <th style="text-align:left;width:28%">Strategic Read</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="sep"><td colspan="7">— LUXURY BRANDS</td></tr>
+      <tr><td class="brand">Hermès</td><td><span class="dot dot-none"></span></td><td><span class="dot dot-half"></span></td><td><span class="dot dot-none"></span></td><td><span class="dot dot-half"></span></td><td><span class="dot dot-full"></span></td><td style="text-align:left;font-size:11px;color:#777">Scarcity IS the promotion. No loyalty, no discounts.</td></tr>
+      <tr><td class="brand">Chanel</td><td><span class="dot dot-none"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td style="text-align:left;font-size:11px;color:#777">Commerce aestheticised into ceremony (La Collection).</td></tr>
+      <tr><td class="brand">Dior</td><td><span class="dot dot-none"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td style="text-align:left;font-size:11px;color:#777">Best-in-class: Dior Beauty Privé + complimentary gifts.</td></tr>
+      <tr><td class="brand">Prada</td><td><span class="dot dot-half"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td style="text-align:left;font-size:11px;color:#777">Directly relevant benchmark for DGB — younger luxury brand.</td></tr>
+      <tr><td class="brand">Armani</td><td><span class="dot dot-half"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td style="text-align:left;font-size:11px;color:#777">Service-led: gift finder, virtual try-on, pro access.</td></tr>
+      <tr><td class="brand">YSL</td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td style="text-align:left;font-size:11px;color:#777">Most commercial luxury brand — "Special Offers" page.</td></tr>
+      <tr class="dgb-line"><td class="brand dgb-row">★ D&amp;G Beauty</td><td><span class="dot dot-none"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-none"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td style="text-align:left;font-size:11px;color:var(--gold)">Zero discount · GWP pre-launch · No loyalty (gap).</td></tr>
+      <tr class="sep"><td colspan="7">— E-RETAILERS (Middle East)</td></tr>
+      <tr><td class="brand">Ounass</td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-half"></span></td><td style="text-align:left;font-size:11px;color:#777">Primary ME luxury platform — up to 60% off.</td></tr>
+      <tr><td class="brand">Sephora</td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td style="text-align:left;font-size:11px;color:#777">Mature promotional infra — Beauty Insider tiers.</td></tr>
+      <tr><td class="brand">LookFant.</td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td><span class="dot dot-full"></span></td><td style="text-align:left;font-size:11px;color:#777">Most aggressive — subscriptions, app exclusives, % off.</td></tr>
+    </tbody>
+  </table>
+  <div class="mx-legend reveal">
+    <div class="mx-legend-item"><span class="dot dot-full"></span> Fully used</div>
+    <div class="mx-legend-item"><span class="dot dot-half"></span> Partially / prestige-coded</div>
+    <div class="mx-legend-item"><span class="dot dot-none"></span> Not used / avoided</div>
+  </div>
+</section>
+
+<!-- ── MECHANICS ── -->
+<div class="section-dark">
+<section id="mechanics">
+  <div class="section-eyebrow reveal">03 — Promotional Mechanics</div>
+  <h2 class="section-title reveal">A Categorised Analysis</h2>
+  <div class="section-rule reveal"></div>
+  <p class="section-intro reveal">Five promotional mechanics identified and assessed for their compatibility with luxury brand equity — from safest to highest-risk.</p>
+  <div class="mec-grid">
+    <div class="mec-card reveal reveal-delay-1">
+      <div class="mec-header" style="background:rgba(27,77,46,.25);border-bottom:1px solid rgba(27,77,46,.4)">
+        <span class="mec-icon">🎁</span>
+        <div class="mec-title">Gift with Purchase</div>
+      </div>
+      <div class="mec-body">
+        <span class="mec-badge safe">✓ Gold Standard</span>
+        <p class="mec-text">Shifts focus from price to value. Increases perceived exclusivity and basket size without markdown language. Universally adopted across the luxury set.</p>
+        <div class="mec-dgb">D&amp;G: Pre-launch miniatures — receive sample before official release. "First to discover" positioning.</div>
+      </div>
+    </div>
+    <div class="mec-card reveal reveal-delay-2">
+      <div class="mec-header" style="background:rgba(74,10,74,.25);border-bottom:1px solid rgba(74,10,74,.4)">
+        <span class="mec-icon">💎</span>
+        <div class="mec-title">Limited Editions</div>
+      </div>
+      <div class="mec-body">
+        <span class="mec-badge str">✓ Scarcity Lever</span>
+        <p class="mec-text">Creates urgency and exclusivity without price reference. Hermès model: scarcity IS the promotion. Must be genuine and meaningful to remain effective.</p>
+        <div class="mec-dgb">D&amp;G: Online-exclusive drops — products/bundles not yet available at any retailer.</div>
+      </div>
+    </div>
+    <div class="mec-card reveal reveal-delay-3">
+      <div class="mec-header" style="background:rgba(22,40,69,.35);border-bottom:1px solid rgba(22,40,69,.5)">
+        <span class="mec-icon">⭐</span>
+        <div class="mec-title">Loyalty Programs</div>
+      </div>
+      <div class="mec-body">
+        <span class="mec-badge gap">⚡ Strategic Gap</span>
+        <p class="mec-text">Compatible with prestige only when access-based — not points or discounts. Dior Beauty Privé, Chanel La Collection. DGB has no programme yet.</p>
+        <div class="mec-dgb">Priority: "Private Beauty Club" — Insider / Muse / Icon tiers with access-based rewards.</div>
+      </div>
+    </div>
+    <div class="mec-card reveal reveal-delay-4">
+      <div class="mec-header" style="background:rgba(74,51,0,.3);border-bottom:1px solid rgba(74,51,0,.5)">
+        <span class="mec-icon">🛍</span>
+        <div class="mec-title">Retailer-led Activation</div>
+      </div>
+      <div class="mec-body">
+        <span class="mec-badge str">✓ Structural Separation</span>
+        <p class="mec-text">Retailers absorb commercial pressure that brands cannot apply to owned channels. Sephora, Ounass, Chalhoub Group play this role in the ME.</p>
+        <div class="mec-dgb">Architecture: DGB.com = prestige-pure. Retail partners = volume &amp; conversion engine.</div>
+      </div>
+    </div>
+    <div class="mec-card reveal reveal-delay-5">
+      <div class="mec-header" style="background:rgba(107,26,26,.3);border-bottom:1px solid rgba(107,26,26,.5)">
+        <span class="mec-icon">⚠</span>
+        <div class="mec-title">Discount Visibility</div>
+      </div>
+      <div class="mec-body">
+        <span class="mec-badge warn">⚠ Minimize</span>
+        <p class="mec-text">Highest-risk mechanic. Visible markdowns contradict exclusivity signals, reduce perceived value, and condition customers to wait for promotions.</p>
+        <div class="mec-dgb">D&amp;G: Zero-discount policy on DGB.com ✓ — fully aligned with Hermès / Chanel / Dior best practice.</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ── MARKET DATA ── -->
+<section id="market">
+  <div class="section-eyebrow reveal">04 — Market Data</div>
+  <h2 class="section-title reveal">Interactive Charts</h2>
+  <div class="section-rule reveal"></div>
+  <div class="charts-grid">
+    <div class="chart-card reveal reveal-delay-1">
+      <div class="chart-card-title">D&amp;G Revenue by Region</div>
+      <div class="chart-card-sub">FY 2025 — €660M total</div>
+      <div class="chart-container"><canvas id="chartRegion"></canvas></div>
+    </div>
+    <div class="chart-card reveal reveal-delay-2">
+      <div class="chart-card-title">ME Luxury Beauty Market</div>
+      <div class="chart-card-sub">By country — 2023</div>
+      <div class="chart-container"><canvas id="chartME"></canvas></div>
+    </div>
+    <div class="chart-card reveal reveal-delay-3">
+      <div class="chart-card-title">ME Market Growth Forecast</div>
+      <div class="chart-card-sub">USD Billion — 2023 → 2030</div>
+      <div class="chart-container"><canvas id="chartGrowth"></canvas></div>
+    </div>
+  </div>
+  <div class="charts-grid" style="margin-top:20px;grid-template-columns:1fr 2fr">
+    <div class="chart-card reveal reveal-delay-1" style="margin-top:0">
+      <div class="chart-card-title">Mechanics Priority Mix</div>
+      <div class="chart-card-sub">Prestige-safety weighting</div>
+      <div class="chart-container"><canvas id="chartMechanics"></canvas></div>
+    </div>
+    <div class="chart-card reveal reveal-delay-2" style="margin-top:0">
+      <div class="chart-card-title">Brand Promotional Visibility Score</div>
+      <div class="chart-card-sub">1 = Prestige-safe · 5 = Fully commercial</div>
+      <div class="chart-container" style="height:220px"><canvas id="chartBrands"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TENSIONS ── -->
+<div class="section-dark">
+<section id="tensions">
+  <div class="section-eyebrow reveal">05 — Tensions</div>
+  <h2 class="section-title reveal">Commercial Push vs. Brand Equity</h2>
+  <div class="section-rule reveal"></div>
+  <p class="section-intro reveal">Five structural tensions that DGB must actively navigate — each represents a competing set of imperatives that cannot be fully resolved, only managed through strategic governance.</p>
+  <div class="tens-grid">
+    <div class="tens-card reveal reveal-delay-1">
+      <span class="tens-left">Visibility</span>
+      <span class="tens-vs">⚡</span>
+      <span class="tens-right">Prestige</span>
+      <div class="tens-desc">Explicit promotions drive short-term conversion but erode luxury perception. DGB's zero-discount policy is correct but reduces competitive visibility during Black Friday.</div>
+    </div>
+    <div class="tens-card reveal reveal-delay-2">
+      <span class="tens-left">Experience</span>
+      <span class="tens-vs">⚡</span>
+      <span class="tens-right">Transaction</span>
+      <div class="tens-desc">Luxury brands must resist frictionless-checkout logic on owned channels, instead elevating every purchase into a brand experience with storytelling and premium presentation.</div>
+    </div>
+    <div class="tens-card reveal reveal-delay-3">
+      <span class="tens-left">Exclusivity</span>
+      <span class="tens-vs">⚡</span>
+      <span class="tens-right">Accessibility</span>
+      <div class="tens-desc">Growth must come from extending the perception of exclusivity — not from genuinely making products less rare. More consumers must feel privileged, not see lower prices.</div>
+    </div>
+    <div class="tens-card reveal reveal-delay-4">
+      <span class="tens-left">Brand</span>
+      <span class="tens-vs">⚡</span>
+      <span class="tens-right">Retailers</span>
+      <div class="tens-desc">Retailers drive acquisition and volume but introduce brand risk: visible markdowns, standardised presentation, and reduced narrative control — a structural vulnerability.</div>
+    </div>
+    <div class="tens-card reveal reveal-delay-5">
+      <span class="tens-left">Short-term</span>
+      <span class="tens-vs">⚡</span>
+      <span class="tens-right">Long-term CLV</span>
+      <div class="tens-desc">Promotional cycles condition customers to wait for discounts, weakening margins over time. Brand equity investment builds customer lifetime value more sustainably.</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ── STRATEGY ── -->
+<section id="strategy">
+  <div class="section-eyebrow reveal">06 — Strategic Recommendation Framework</div>
+  <h2 class="section-title reveal">The Ideal Digital Strategy<br>for D&amp;G Beauty</h2>
+  <div class="section-rule reveal"></div>
+  <div class="strat-grid">
+    <!-- What to Do -->
+    <div class="strat-card reveal reveal-delay-1">
+      <div class="strat-header" style="background:rgba(27,77,46,.35);border-bottom:2px solid #1B4D2E">
+        <div class="strat-icon">✓</div>
+        <div class="strat-title">What To Do</div>
+      </div>
+      <div class="strat-body" style="padding-top:20px">
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Private Beauty Club</strong> — Insider / Muse / Icon tiers. Access-based: early drops, Ramadan/Eid priority, private sales. Social capital over transactional value.</span></div>
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Luxury Gifting Strategy</strong> — Ramadan/Eid curated beauty rituals, ultra-premium collectible packaging, name engraving. "Gift as luxury object," not an add-on.</span></div>
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Pre-Launch Privilege</strong> — Scale miniature-before-launch into a structured "first to experience" campaign architecture across all major launches.</span></div>
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Experiential Commerce</strong> — VIP in-store appointments via website, private fragrance layering sessions, hybrid events (online invite → offline experience).</span></div>
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Digital Treasure Hunt</strong> — Clues across Instagram, website, CRM → unlock exclusive product or private event invitation.</span></div>
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Beauty Rituals</strong> — "Ramadan Glow Ritual", "Golden Night Ritual" replace discount bundles with identity-driven storytelling and cultural relevance.</span></div>
+        <div class="strat-item"><span class="strat-bullet">▸</span><span class="strat-item-text"><strong>Aspirational Rewards</strong> — Raffle entry via purchase or tier → runway show invite, masterclass, Sicily trip. Taps the ME luxury dream factor.</span></div>
+      </div>
+    </div>
+    <!-- What to Avoid -->
+    <div class="strat-card reveal reveal-delay-2">
+      <div class="strat-header" style="background:rgba(107,26,26,.35);border-bottom:2px solid #6B1A1A">
+        <div class="strat-icon">✗</div>
+        <div class="strat-title">What To Avoid</div>
+      </div>
+      <div class="strat-body" style="padding-top:20px">
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Visible discounting on owned channels</strong> — No "-20%", SALE, or Black Friday messaging on DGB.com. Trains customers to wait for promotions.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Price-based incentives</strong> — No promo codes, cashback, or coupons. Creates price sensitivity in a market that values prestige above savings.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Generic mass CRM</strong> — Non-personalized communications feel transactional. ME consumers expect individual recognition, not broadcast promotions.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Westernized strategies</strong> — Ignoring Ramadan, Eid, gifting rituals, and the centrality of fragrance in ME identity is a critical strategic failure.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Cheap bundling</strong> — Random product sets without narrative instantly break the luxury perception. Every bundle must tell a brand story.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Overusing limited editions</strong> — Scarcity only works when it is genuine. Overuse destroys the mechanic's power and erodes exclusivity perception.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#C0392B">▸</span><span class="strat-item-text"><strong>Transactional loyalty mechanics</strong> — Points-chasing feels like a frequent-flyer programme. Loyalty must deliver access, privilege, and emotional recognition.</span></div>
+      </div>
+    </div>
+    <!-- Governance -->
+    <div class="strat-card reveal reveal-delay-3">
+      <div class="strat-header" style="background:rgba(22,40,69,.4);border-bottom:2px solid #162845">
+        <div class="strat-icon">⚖</div>
+        <div class="strat-title">Governance Principles</div>
+      </div>
+      <div class="strat-body" style="padding-top:20px">
+        <div class="strat-item"><span class="strat-bullet" style="color:#90B4D8">▸</span><span class="strat-item-text"><strong>01 — Prestige Preservation</strong> Every activation must reinforce exclusivity, desirability &amp; storytelling. Commercial intent must exist but never be visible.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#90B4D8">▸</span><span class="strat-item-text"><strong>02 — Invisible Commerciality</strong> D&amp;G must generate revenue — but the mechanism must be invisible. Aestheticise: gift it, limit it, personalise it.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#90B4D8">▸</span><span class="strat-item-text"><strong>03 — Access Over Discount</strong> Value delivered through privilege, experience &amp; access — never through price reduction on any owned touchpoint.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#90B4D8">▸</span><span class="strat-item-text"><strong>04 — Cultural Relevance</strong> All ME activations must reflect Ramadan, Eid, regional gifting culture &amp; fragrance traditions. No copy-paste Western strategy.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#90B4D8">▸</span><span class="strat-item-text"><strong>05 — Controlled Distribution</strong> Strict separation: owned = experience-first; retailers = volume-first. This dual architecture must be actively governed.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:#90B4D8">▸</span><span class="strat-item-text"><strong>06 — Data as Luxury Tool</strong> First-party data enables hyper-personalised access orchestration — not mass promotional broadcasts to anonymous lists.</span></div>
+      </div>
+    </div>
+    <!-- Retailer Diff -->
+    <div class="strat-card reveal reveal-delay-4">
+      <div class="strat-header" style="background:rgba(122,92,30,.35);border-bottom:2px solid #7A5C1E">
+        <div class="strat-icon">🛍</div>
+        <div class="strat-title">Retailer Differentiation</div>
+      </div>
+      <div class="strat-body" style="padding-top:20px">
+        <div class="strat-item"><span class="strat-bullet" style="color:var(--gold-l)">▸</span><span class="strat-item-text"><strong>DGB.com (owned)</strong> Zero discounts. Exclusive VIP drops, pre-launch access, Private Beauty Club, premium gifting, full editorial storytelling &amp; brand control.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:var(--gold-l)">▸</span><span class="strat-item-text"><strong>Sephora ME</strong> Key retail partner for customer acquisition. Allow Beauty Insider mechanics. Activate Ramadan campaigns, seasonal GWP &amp; commercial moments.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:var(--gold-l)">▸</span><span class="strat-item-text"><strong>Ounass</strong> Primary ME digital luxury platform. Premium tone maintained. Visible markdowns &amp; Amber loyalty programme activation acceptable at retailer level.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:var(--gold-l)">▸</span><span class="strat-item-text"><strong>LookFantastic</strong> Digital acquisition engine. Aggressive promotions acceptable — drives new customer trial and introduces D&amp;G to discovery-led audience.</span></div>
+        <div class="strat-item"><span class="strat-bullet" style="color:var(--gold-l)">▸</span><span class="strat-item-text"><strong>Chalhoub Group</strong> Dominant ME luxury distributor — UAE, KSA, Qatar, Kuwait. Strategic partnership essential for physical retail access across the region.</span></div>
+        <div class="strat-item" style="background:rgba(196,151,78,.08);border:1px solid var(--border);border-radius:6px;padding:14px 12px;margin-top:6px"><span class="strat-bullet" style="color:var(--gold)">▸</span><span class="strat-item-text" style="color:#CCC"><em>Retailers drive short-term volume — D&amp;G builds long-term desirability. Strong brand equity makes retail activation more effective over time.</em></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">D&amp;G</div>
+  <div class="footer-sub">Beauty — Luxury &amp; Commercial Activation Strategy</div>
+  <div class="footer-quote">"D&amp;G Beauty should not compete on promotion — but on <em>privilege, storytelling, and controlled access</em> to a desirable luxury universe."</div>
+  <div class="footer-meta">Option 1 &nbsp;·&nbsp; DGB × Università Bocconi &nbsp;·&nbsp; Project Work 2025 &nbsp;·&nbsp; Middle East Market Focus</div>
+</footer>
+
+<script>
+// ── Reveal on scroll ──────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Navbar active section ─────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#'+current) });
+});
+
+// ── Hero counter animation ────────────────────────────────
+function animateNum(el, end, prefix, suffix, decimals=0) {
+  let start=0, dur=2000, startT=null;
+  const step = (t) => {
+    if(!startT) startT=t;
+    const p = Math.min((t-startT)/dur,1);
+    const ease = 1-Math.pow(1-p,3);
+    const val = ease*end;
+    el.textContent = prefix + (decimals ? val.toFixed(decimals) : Math.floor(val)) + suffix;
+    if(p<1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const heroObs = new IntersectionObserver((entries) => {
+  if(entries[0].isIntersecting){
+    setTimeout(()=>animateNum(document.getElementById('cnt-rev'),660,'€','M'),300);
+    setTimeout(()=>animateNum(document.getElementById('cnt-me'),15,'$','B'),500);
+    heroObs.disconnect();
+  }
+},{threshold:0.2});
+heroObs.observe(document.getElementById('hero'));
+
+// ── Chart.js defaults ─────────────────────────────────────
+Chart.defaults.color = '#888';
+Chart.defaults.font.family = 'Inter, sans-serif';
+Chart.defaults.font.size = 11;
+
+const GOLD='#C4974E', GOLD_L='#E8C98A', DARK='#161616';
+const COLORS=[GOLD,'#2A2A2A','#7A5C1E',GOLD_L,'#4A4A4A'];
+const pieColors=[GOLD,'#1A1A1A','#7A5C1E',GOLD_L,'#555'];
+
+let chartsCreated=false;
+const chartObs = new IntersectionObserver((entries) => {
+  if(entries[0].isIntersecting && !chartsCreated){
+    chartsCreated=true; buildCharts();
+    chartObs.disconnect();
+  }
+},{threshold:0.1});
+chartObs.observe(document.getElementById('market'));
+
+function buildCharts(){
+  const commonPieOpts = {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{color:'#888',padding:12,boxWidth:12,font:{size:11}}},
+      tooltip:{backgroundColor:'#1A1A1A',borderColor:GOLD,borderWidth:1,padding:10,titleColor:GOLD,bodyColor:'#CCC'}},
+    animation:{duration:1200,easing:'easeOutQuart'}
+  };
+
+  // Revenue by Region
+  new Chart(document.getElementById('chartRegion'),{type:'doughnut',data:{
+    labels:['Americas','EMEA','APAC'],
+    datasets:[{data:[54,38,8],backgroundColor:[GOLD,'#2A2A2A','#888'],borderColor:'#111',borderWidth:3,hoverOffset:8}]
+  },options:{...commonPieOpts,cutout:'65%',
+    plugins:{...commonPieOpts.plugins,
+      tooltip:{...commonPieOpts.plugins.tooltip,callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+
+  // ME by Country
+  new Chart(document.getElementById('chartME'),{type:'doughnut',data:{
+    labels:['UAE','Saudi Arabia','Qatar','Kuwait','Others'],
+    datasets:[{data:[55,22,8,7,8],backgroundColor:[GOLD,'#1A1A1A','#7A5C1E',GOLD_L,'#555'],borderColor:'#111',borderWidth:3,hoverOffset:8}]
+  },options:{...commonPieOpts,cutout:'60%',
+    plugins:{...commonPieOpts.plugins,
+      tooltip:{...commonPieOpts.plugins.tooltip,callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+
+  // ME Growth
+  new Chart(document.getElementById('chartGrowth'),{type:'bar',data:{
+    labels:['2023','2025e','2027e','2030e'],
+    datasets:[{label:'USD Billion',data:[15,20,25,30],
+      backgroundColor:[GOLD_L,GOLD,'#7A5C1E','#1A1A1A'],
+      borderColor:'transparent',borderRadius:4,borderWidth:0}]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{backgroundColor:'#1A1A1A',borderColor:GOLD,borderWidth:1,padding:10,titleColor:GOLD,bodyColor:'#CCC',callbacks:{label:c=>`$${c.parsed.y}B`}}},
+    scales:{x:{grid:{display:false},ticks:{color:'#888'}},
+      y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#888',callback:v=>'$'+v+'B'},
+        min:0,max:36}},
+    animation:{duration:1200,easing:'easeOutQuart'}}});
+
+  // Mechanics
+  new Chart(document.getElementById('chartMechanics'),{type:'pie',data:{
+    labels:['Gift w/ Purchase','Limited Editions','Loyalty','Retailer Act.','Disc. Visibility'],
+    datasets:[{data:[30,25,20,15,10],
+      backgroundColor:['#1B4D2E',GOLD,'#162845','#7A5C1E','#6B1A1A'],
+      borderColor:'#111',borderWidth:3,hoverOffset:8}]
+  },options:{...commonPieOpts,plugins:{...commonPieOpts.plugins,
+    legend:{position:'bottom',labels:{color:'#888',padding:8,boxWidth:10,font:{size:10}}},
+    tooltip:{...commonPieOpts.plugins.tooltip,callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}}});
+
+  // Brand visibility score
+  new Chart(document.getElementById('chartBrands'),{type:'bar',data:{
+    labels:['Hermès','Chanel','Dior','D&G ★','Prada','Armani','YSL','Ounass','Sephora','LookFant.','Notino'],
+    datasets:[{label:'Visibility Score (1-5)',
+      data:[1,1.5,1.5,2,2.5,2.5,3.5,4,4.5,4.5,5],
+      backgroundColor:['#1A1A1A','#1A1A1A','#1A1A1A',GOLD,'#2A2A2A','#2A2A2A','#444','#666','#777','#888','#999'],
+      borderColor:'transparent',borderRadius:4,indexAxis:'y'}]
+  },options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{backgroundColor:'#1A1A1A',borderColor:GOLD,borderWidth:1,padding:10,titleColor:GOLD,bodyColor:'#CCC'}},
+    scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#888'},min:0,max:5},
+      y:{grid:{display:false},ticks:{color:v=>v.label==='D&G ★'?GOLD:'#888'}}},
+    animation:{duration:1400,easing:'easeOutQuart'}}});
+}
+</script>
+</body>
+</html>
